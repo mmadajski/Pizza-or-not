@@ -1,10 +1,11 @@
 import numpy as np
 import tensorflow as tf
 from keras.layers import InputLayer, Conv2D, MaxPool2D,\
-    Flatten, Dense, Activation, BatchNormalization, ReLU, \
+    Flatten, Dense, BatchNormalization, ReLU, \
     AveragePooling2D
 from typing import TypeVar
 array_like = TypeVar("array_like")
+
 
 def build_cnn_network(params: dict) -> tf.keras.Sequential:
     model = tf.keras.Sequential()
@@ -68,7 +69,7 @@ def create_res_net_block(x, filters_num, kernel_size, layers_num):
 
 def calculate_metrics(answers: array_like, predictions: array_like) -> tuple[any]:
     """
-    Calculates accuracy, recall, specificity.
+    Calculates accuracy, recall, specificity and returns them as tuple.
     :param answers:
     :param predictions:
     :return:

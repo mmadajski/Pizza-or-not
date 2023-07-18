@@ -1,19 +1,16 @@
 import glob
-import keras
 import mlflow
+import mlflow.keras
+from mlflow.types.schema import Schema, TensorSpec
 import numpy as np
 import cv2 as cv2
-import tensorflow as tf
-from keras.layers import InputLayer, Conv2D, MaxPool2D, Flatten, Dense, Activation, BatchNormalization, ReLU, \
-    AveragePooling2D
 from random import seed
 from random import choices
-import matplotlib
 import yaml
 from yaml.loader import SafeLoader
 from Utils import build_cnn_network, build_resnet_network, calculate_metrics
 
-mlflow.start_run()
+mlflow.start_run(run_name="test")
 
 paths_pizza = glob.glob(".//pizza_not_pizza//pizza//*.jpg")[:5]
 paths_not_pizza = glob.glob(".//pizza_not_pizza//not_pizza//*.jpg")[:5]
@@ -92,13 +89,13 @@ ResNet.compile(optimizer="adam", loss="binary_crossentropy", metrics=['accuracy'
 history_cnn = CNN.fit(train_data_np, train_answers_np, batch_size=cnn_params["batch_size"], epochs=cnn_params["epochs"])
 history_res = ResNet.fit(train_data_np, train_answers_np, batch_size=resnet_params["batch_size"], epochs=resnet_params["epochs"])
 
-for acc, loss in zip(history_cnn.history["accuracy"], history_cnn.history["loss"]):
-    mlflow.log_metric("CNN history accuracy", acc)
-    mlflow.log_metric("CNN history loss", loss)
+for i in range(cnn_params["epochs"]):
+    mlflow.log_metric("CNN history accuracy", history_cnn.history["accuracy"][i], step=i)
+    mlflow.log_metric("CNN history loss", history_cnn.history["loss"][i], step=i)
 
-for acc, loss in zip(history_res.history["accuracy"], history_res.history["loss"]):
-    mlflow.log_metric("Resnet history accuracy", acc)
-    mlflow.log_metric("Resnet history loss", loss)
+for i in range(resnet_params["epochs"]):
+    mlflow.log_metric("Resnet history accuracy", history_res.history["accuracy"][i], step=i)
+    mlflow.log_metric("Resnet history loss", history_res.history["loss"][i], step=i)
 
 train_pred_cnn = CNN.predict(train_data_np)
 pred_train_cnn_list = [int(i[0] > 0.5) for i in train_pred_cnn]
@@ -127,5 +124,11 @@ res_net_test_metrics = calculate_metrics(test_answers_np, pred_test_res_list)
 mlflow.log_metric("ResNet test accuracy", res_net_test_metrics[0])
 mlflow.log_metric("ResNet test recall", res_net_test_metrics[1])
 mlflow.log_metric("ResNet test specificity", res_net_test_metrics[2])
+
+models_schema_in = Schema([TensorSpec(np.dtype(np.float64), (-1, 256, 256, 3))])
+output_schema_out = Schema([TensorSpec(np.dtype(np.float64), (-1, 1))])
+models_signature = mlflow.models.ModelSignature(inputs=models_schema_in, outputs=output_schema_out)
+mlflow.tensorflow.log_model(CNN, "CNN-model", signature=models_signature)
+mlflow.tensorflow.log_model(CNN, "ResNet-model", signature=models_signature)
 
 mlflow.end_run()
