@@ -10,10 +10,10 @@ import yaml
 from yaml.loader import SafeLoader
 from Utils import build_cnn_network, build_resnet_network, calculate_metrics
 
-mlflow.start_run(run_name="test")
+mlflow.start_run(run_name="Default params test.")
 
-paths_pizza = glob.glob(".//pizza_not_pizza//pizza//*.jpg")[:5]
-paths_not_pizza = glob.glob(".//pizza_not_pizza//not_pizza//*.jpg")[:5]
+paths_pizza = glob.glob(".//pizza_not_pizza//pizza//*.jpg")
+paths_not_pizza = glob.glob(".//pizza_not_pizza//not_pizza//*.jpg")
 
 seed(123)
 selected_pizza_train = choices(paths_pizza, k=int(len(paths_pizza) * 0.7))
