@@ -1,0 +1,1 @@
+{'convolutional_layers': 3, 'filters_number': [16, 32, 64], 'kernel_size': 5, 'polling_size': [5, 5], 'dense_layers_neurons_num': [64, 32, 16], 'batch_size': 45, 'epochs': 15}

@@ -1,0 +1,1 @@
+{'initial_filters': 16, 'kernel_size': 5, 'polling_size': [2, 2], 'residual_blocks': 2, 'residual_filters_number': [32, 64], 'convolution_layers_inside_res_block': 3, 'dense_layers_neurons_num': [128, 64, 32], 'batch_size': 45, 'epochs': 15}

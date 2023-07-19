@@ -1,8 +1,13 @@
+import canvas
 import numpy as np
 import tensorflow as tf
 from keras.layers import InputLayer, Conv2D, MaxPool2D,\
     Flatten, Dense, BatchNormalization, ReLU, \
     AveragePooling2D
+from sklearn.metrics import roc_curve, auc
+import matplotlib
+matplotlib.use('WXAgg')
+import matplotlib.pyplot as plt
 from typing import TypeVar
 array_like = TypeVar("array_like")
 
@@ -85,3 +90,17 @@ def calculate_metrics(answers: array_like, predictions: array_like) -> tuple[any
         confusion_matrix_cnn[0][0] / (confusion_matrix_cnn[0][0] + confusion_matrix_cnn[1][0]))
 
     return accuracy, recall, specificity
+
+
+def create_roc_image(answers, probabilities, title: str) -> np.ndarray[np.uint8]:
+    fpr, tpr, _ = roc_curve(answers, probabilities)
+    figure, ax = plt.subplots()
+    ax.plot(fpr, tpr, label=title)
+    figure.canvas.draw()
+    render = figure.canvas.renderer
+    figure.draw(render)
+    image_array = np.frombuffer(figure.canvas.tostring_rgb(), dtype=np.uint8)
+    cols, rows = figure.canvas.get_width_height()
+    roc_image = np.reshape(image_array, (rows, cols, 3))
+
+    return roc_image

@@ -8,7 +8,11 @@ from random import seed
 from random import choices
 import yaml
 from yaml.loader import SafeLoader
-from Utils import build_cnn_network, build_resnet_network, calculate_metrics
+from Utils import build_cnn_network, build_resnet_network, calculate_metrics, create_roc_image
+import matplotlib
+matplotlib.use('TkAgg')
+
+
 
 mlflow.start_run(run_name="Default params test.")
 
@@ -111,6 +115,9 @@ mlflow.log_metric("CNN test accuracy", cnn_test_metrics[0])
 mlflow.log_metric("CNN test recall", cnn_test_metrics[1])
 mlflow.log_metric("CNN test specificity", cnn_test_metrics[2])
 
+CNN_roc = create_roc_image(test_answers_np, test_pred_cnn, "Roc curve - CNN")
+mlflow.log_image(CNN_roc, "Roc_images_CNN.png")
+
 train_pred_res = ResNet.predict(train_data_np)
 pred_train_res_list = [int(i[0] > 0.5) for i in train_pred_res]
 res_net_train_metrics = calculate_metrics(train_answers_np, pred_train_res_list)
@@ -124,6 +131,9 @@ res_net_test_metrics = calculate_metrics(test_answers_np, pred_test_res_list)
 mlflow.log_metric("ResNet test accuracy", res_net_test_metrics[0])
 mlflow.log_metric("ResNet test recall", res_net_test_metrics[1])
 mlflow.log_metric("ResNet test specificity", res_net_test_metrics[2])
+
+ResNet_roc = create_roc_image(test_answers_np, test_pred_res, "Roc curve - ResNet")
+mlflow.log_image(ResNet_roc, "Roc_images_ResNet.png")
 
 models_schema_in = Schema([TensorSpec(np.dtype(np.float64), (-1, 256, 256, 3))])
 output_schema_out = Schema([TensorSpec(np.dtype(np.float64), (-1, 1))])
