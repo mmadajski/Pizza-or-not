@@ -13,7 +13,6 @@ import matplotlib
 matplotlib.use('TkAgg')
 
 
-
 mlflow.start_run(run_name="Default params test.")
 
 paths_pizza = glob.glob(".//pizza_not_pizza//pizza//*.jpg")
