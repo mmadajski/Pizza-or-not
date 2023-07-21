@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/micha/Desktop/pythonProject/Water_Quality/mlruns/0/ce14f4139ca6442f80789d6aef1e9753/artifacts
+end_time: 1689834828934
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: ce14f4139ca6442f80789d6aef1e9753
+run_name: Dataset without augmentation.
+run_uuid: ce14f4139ca6442f80789d6aef1e9753
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1689830810059
+status: 3
+tags: []
+user_id: micha

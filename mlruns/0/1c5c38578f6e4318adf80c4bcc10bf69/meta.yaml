@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/micha/Desktop/pythonProject/Water_Quality/mlruns/0/1c5c38578f6e4318adf80c4bcc10bf69/artifacts
+end_time: 1689812060097
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 1c5c38578f6e4318adf80c4bcc10bf69
+run_name: Smaller networks test.
+run_uuid: 1c5c38578f6e4318adf80c4bcc10bf69
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1689803948917
+status: 3
+tags: []
+user_id: micha

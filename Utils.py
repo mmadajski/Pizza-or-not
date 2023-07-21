@@ -1,3 +1,4 @@
+import mlflow
 import numpy as np
 import tensorflow as tf
 from keras.layers import InputLayer, Conv2D, MaxPool2D,\
@@ -12,6 +13,13 @@ array_like = TypeVar("array_like")
 
 
 def build_cnn_network(params: dict) -> tf.keras.Sequential:
+    """
+    Function builds convolution neural network based on loaded in params.yaml file.
+    for more information about parameters read example_params.yaml.
+    :param params:
+    :return: tf.keras.Sequential
+    """
+
     model = tf.keras.Sequential()
     model.add(InputLayer(input_shape=(256, 256, 3)))
 
@@ -33,6 +41,13 @@ def build_cnn_network(params: dict) -> tf.keras.Sequential:
 
 
 def build_resnet_network(params: dict) -> tf.keras.Sequential:
+    """
+    Function builds residual neural network based on loaded in params.yaml file.
+    for more information about parameters read example_params.yaml.
+    :param params:
+    :return: tf.keras.Sequential
+    """
+
     model_input = tf.keras.Input(shape=(256, 256, 3))
 
     next_layer = Conv2D(params["initial_filters"], params["kernel_size"])(model_input)
@@ -58,6 +73,16 @@ def build_resnet_network(params: dict) -> tf.keras.Sequential:
 
 
 def create_res_net_block(x, filters_num, kernel_size, layers_num):
+    """
+    Creates resnet shortcut block. Layers_num defines how many
+    convolutional layers are inbetween shortcut.
+    :param x:
+    :param filters_num:
+    :param kernel_size:
+    :param layers_num:
+    :return:
+    """
+
     x_next = x
 
     for layer in range(layers_num - 1):
@@ -94,7 +119,29 @@ def calculate_metrics(answers: array_like, predictions: array_like) -> tuple[flo
     return accuracy, recall, specificity
 
 
+def log_model_metrics(metrics: tuple[float, float, float], log_message: str) -> None:
+    """
+    Logging calculated metrics to mlflow.
+    :param metrics:
+    :param log_message:
+    """
+
+    mlflow.log_metric(log_message + " accuracy", metrics[0])
+    mlflow.log_metric(log_message + " recall", metrics[1])
+    mlflow.log_metric(log_message + " specificity", metrics[2])
+
+
 def create_roc_image(answers, probabilities, title: str) -> np.ndarray[np.uint8]:
+    """
+    Function calculates roc curve based on answers and probabilities.
+    Roc curve is plotted using matplotlib and then converted into two-dimensional
+    np.array with data type uint8 as such image format is supported in mlflow.log_image function.
+    :param answers:
+    :param probabilities:
+    :param title:
+    :return: np.ndarray[np.uint8]
+    """
+
     fpr, tpr, _ = roc_curve(answers, probabilities)
     figure, ax = plt.subplots()
     ax.plot(fpr, tpr, label=title)

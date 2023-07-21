@@ -1,14 +1,31 @@
-# Rename this file name to "params.yaml" to use these example parameters.
+# Rename this files name to "params.yaml" before running "Pizza.py" to use it.
 # Fell free to modify :)
 
+# Run parameters.
+# name: Defines name should mlflow run have.
+# description: Description of run. (Optional)
 Run:
   name: Example.
   description: Example run.
 
+# Dataset parameters.
+# train_test_split: Ranges from 0 to 1. Describes percentage of data
+#  to be used in training and testing .
+# augmentation: If true data augmentation will be performed.
 Dataset:
   train_test_split: 0.7
   augmentation: False
 
+# Convolution network parameters.
+# convolutional_layers: Number of convolutional layers in network.
+# filters_number: List containing number of filters in each convolutional layer.
+# Length of this list must be the same as convolutional_layers number.
+# kernel_size: Size of kernels in network.
+# polling_size: List that defines size of pooling window in network.
+# dense_layers_neurons_num: List containing number of neurons in each dense layer.
+# batch_normalization: If true batch normalization will be performed after each convolutional layer.
+# batch_size: Number of samples in each batch.
+# epochs: Number of epoch in networks training.
 CNN:
   convolutional_layers: 3
   filters_number: [16, 32, 64]
@@ -18,6 +35,17 @@ CNN:
   batch_normalization: False
   batch_size: 45
   epochs: 15
+
+# Residual network parameters.
+# initial_filters: Number of filters in initial convolutional layer.
+# kernel_size: List defining size of kernels in network.
+# polling_size: List that defines size of pooling window in network.
+# residual_blocks: Number of blocks with shortcut.
+# residual_filters_number: List containing number of filters inside each block.
+# convolution_layers_inside_res_block: How many layers should be inside residual block.
+# dense_layers_neurons_num: List containing number of neurons in each dense layer.
+# batch_size: Number of samples in each batch.
+# epochs: Number of epoch in networks training.
 
 ResNet:
   initial_filters: 16
