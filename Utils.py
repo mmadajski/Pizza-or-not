@@ -1,14 +1,13 @@
-import canvas
 import numpy as np
 import tensorflow as tf
 from keras.layers import InputLayer, Conv2D, MaxPool2D,\
     Flatten, Dense, BatchNormalization, ReLU, \
     AveragePooling2D
-from sklearn.metrics import roc_curve, auc
-import matplotlib
-matplotlib.use('WXAgg')
+from sklearn.metrics import roc_curve
 import matplotlib.pyplot as plt
 from typing import TypeVar
+import matplotlib
+matplotlib.use('TkAgg')
 array_like = TypeVar("array_like")
 
 
@@ -18,6 +17,9 @@ def build_cnn_network(params: dict) -> tf.keras.Sequential:
 
     for layer in range(params["convolutional_layers"]):
         model.add(Conv2D(params["filters_number"][layer], params["kernel_size"], activation="relu"))
+
+        if params["batch_normalization"] is True:
+            model.add(BatchNormalization())
         model.add(MaxPool2D(params["polling_size"]))
 
     model.add(Flatten())
@@ -72,7 +74,7 @@ def create_res_net_block(x, filters_num, kernel_size, layers_num):
     return x
 
 
-def calculate_metrics(answers: array_like, predictions: array_like) -> tuple[any]:
+def calculate_metrics(answers: array_like, predictions: array_like) -> tuple[float, float, float]:
     """
     Calculates accuracy, recall, specificity and returns them as tuple.
     :param answers:

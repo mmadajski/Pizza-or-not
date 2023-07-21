@@ -12,21 +12,28 @@ from Utils import build_cnn_network, build_resnet_network, calculate_metrics, cr
 import matplotlib
 matplotlib.use('TkAgg')
 
+with open('params.yaml') as f:
+    parameters = yaml.load(f, Loader=SafeLoader)
+    cnn_params = parameters["CNN"]
+    resnet_params = parameters["ResNet"]
+    dataset_params = parameters["Dataset"]
+    run_params = parameters["Run"]
 
-mlflow.start_run(run_name="Default params test.")
+mlflow.start_run(run_name=run_params["name"], description=run_params["description"])
 
-paths_pizza = glob.glob(".//pizza_not_pizza//pizza//*.jpg")
-paths_not_pizza = glob.glob(".//pizza_not_pizza//not_pizza//*.jpg")
+mlflow.log_param("train_test_split", dataset_params["train_test_split"])
+mlflow.log_param("augmentation", dataset_params["augmentation"])
+
+paths_pizza = glob.glob(".//pizza_not_pizza//pizza//*.jpg")[:5]
+paths_not_pizza = glob.glob(".//pizza_not_pizza//not_pizza//*.jpg")[:5]
 
 seed(123)
-selected_pizza_train = choices(paths_pizza, k=int(len(paths_pizza) * 0.7))
+selected_pizza_train = choices(paths_pizza, k=int(len(paths_pizza) * dataset_params["train_test_split"]))
 
 seed(456)
 selected_not_pizza_train = choices(paths_not_pizza, k=int(len(paths_not_pizza) * 0.7))
 test_paths_pizza = list(set(paths_pizza) - set(selected_pizza_train))
 test_paths_not_pizza = list(set(paths_not_pizza) - set(selected_not_pizza_train))
-
-test_answers = []
 
 data_train_list = []
 data_train_answer = []
@@ -37,20 +44,17 @@ for i in range(len(selected_pizza_train)):
     data_train_list.append(img_resize)
     data_train_answer.append(1)
 
-    # Simple data augmentation by flipping images.
-    image_flip = cv2.flip(img_resize, 1)
-    data_train_list.append(image_flip)
-    data_train_answer.append(1)
-
     img = cv2.imread(selected_not_pizza_train[i])
     img_resize = cv2.resize(img, (256, 256))
     data_train_list.append(img_resize)
     data_train_answer.append(0)
 
-    # Same data augmentation for 0 class.
-    image_flip = cv2.flip(img_resize, 1)
-    data_train_list.append(image_flip)
-    data_train_answer.append(0)
+
+if dataset_params["augmentation"] is True:
+    augmented_images = [cv2.flip(img, 1) for img in data_train_list]
+    data_train_list.extend(augmented_images)
+    answers_copy = data_train_answer.copy()
+    data_train_answer.extend(answers_copy)
 
 data_test = []
 data_test_answers = []
@@ -72,11 +76,6 @@ train_answers_np = np.array(data_train_answer)
 
 test_data_np = np.array(data_test) / 255
 test_answers_np = np.array(data_test_answers)
-
-with open('params.yaml') as f:
-    parameters = yaml.load(f, Loader=SafeLoader)
-    cnn_params = parameters["CNN"]
-    resnet_params = parameters["ResNet"]
 
 mlflow.log_param("CNN", cnn_params)
 mlflow.log_param("RenNet", resnet_params)
