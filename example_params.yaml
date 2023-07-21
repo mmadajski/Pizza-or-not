@@ -2,7 +2,7 @@
 # Fell free to modify :)
 
 # Run parameters.
-# name: Defines name should mlflow run have.
+# name: Defines a name that mlflow run should have.
 # description: Description of run. (Optional)
 Run:
   name: Example.
