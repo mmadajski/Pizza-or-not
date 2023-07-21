@@ -1,13 +1,13 @@
-# Rename this file name to "params.yaml" to use these example params.
+# Rename this file name to "params.yaml" to use these example parameters.
 # Fell free to modify :)
 
 Run:
-  name: Dataset without augmentation.
+  name: Example.
   description: Example run.
 
 Dataset:
   train_test_split: 0.7
-  augmentation: True
+  augmentation: False
 
 CNN:
   convolutional_layers: 3
