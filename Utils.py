@@ -14,8 +14,8 @@ array_like = TypeVar("array_like")
 
 def build_cnn_network(params: dict) -> tf.keras.Sequential:
     """
-    Function builds convolution neural network based on loaded in params.yaml file.
-    for more information about parameters read example_params.yaml.
+    A function that builds a braided neural network based on parameters loaded in the params.yaml file.
+    For more information about the parameters, read example_params.yaml.
     :param params:
     :return: tf.keras.Sequential
     """
@@ -42,8 +42,8 @@ def build_cnn_network(params: dict) -> tf.keras.Sequential:
 
 def build_resnet_network(params: dict) -> tf.keras.Sequential:
     """
-    Function builds residual neural network based on loaded in params.yaml file.
-    for more information about parameters read example_params.yaml.
+    A function that builds a residual neural network based on parameters loaded into the params.yaml file.
+    For more information about the parameters, read example_params.yaml.
     :param params:
     :return: tf.keras.Sequential
     """
@@ -133,9 +133,9 @@ def log_model_metrics(metrics: tuple[float, float, float], log_message: str) -> 
 
 def create_roc_image(answers, probabilities, title: str) -> np.ndarray[np.uint8]:
     """
-    Function calculates roc curve based on answers and probabilities.
-    Roc curve is plotted using matplotlib and then converted into two-dimensional
-    np.array with data type uint8 as such image format is supported in mlflow.log_image function.
+    A function that calculates the roc curve based on response and probability.
+    The roc curve is plotted using matplotlib and then converted to a two-dimensional
+    np.array with a data type of uint8, since this is the image format supported by the mlflow.log_image function.
     :param answers:
     :param probabilities:
     :param title:

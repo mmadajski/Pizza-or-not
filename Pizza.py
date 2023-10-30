@@ -3,7 +3,7 @@ import mlflow
 import mlflow.keras
 from mlflow.types.schema import Schema, TensorSpec
 import numpy as np
-import cv2 as cv2
+import cv2
 from random import seed
 from random import choices
 import yaml
@@ -30,9 +30,9 @@ mlflow.log_param("augmentation", dataset_params["augmentation"])
 
 """
 Loading and preparing data.
-Data is contained in two directories. One contains 983 images of pizza
-and the other 983 images of other types of food.
-Images don't have the same resolution so they require resizing. 
+Data is contained in two directories. One contains 983 photos of pizza
+and the other contains 983 photos of other foods.
+Images don't have the same resolution, so they require resizing. 
 """
 
 paths_pizza = glob.glob(".//pizza_not_pizza//pizza//*.jpg")
@@ -61,7 +61,7 @@ for i in range(len(selected_pizza_train)):
     data_train_list.append(img_resize)
     data_train_answer.append(0)
 
-# If augmentation parameter equals True simple data augmentation is performed.
+# If the augmentation parameter is equal to True, a simple data augmentation is performed.
 if dataset_params["augmentation"] is True:
     augmented_images = [cv2.flip(img, 1) for img in data_train_list]
     data_train_list.extend(augmented_images)

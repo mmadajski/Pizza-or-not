@@ -2,8 +2,8 @@
 # Fell free to modify :)
 
 # Run parameters.
-# name: Defines a name that mlflow run should have.
-# description: Description of run. (Optional)
+# name: Specifies the name that the mlflow run should have.
+# description: Description of the run. (Optional)
 Run:
   name: Example.
   description: Example run.
@@ -11,19 +11,19 @@ Run:
 # Dataset parameters.
 # train_test_split: Ranges from 0 to 1. Describes percentage of data
 #  to be used in training and testing .
-# augmentation: If true data augmentation will be performed.
+# augmentation: If true, data augmentation will be performed.
 Dataset:
   train_test_split: 0.7
   augmentation: False
 
 # Convolution network parameters.
-# convolutional_layers: Number of convolutional layers in network.
-# filters_number: List containing number of filters in each convolutional layer.
-# Length of this list must be the same as convolutional_layers number.
-# kernel_size: Size of kernels in network.
-# polling_size: List that defines size of pooling window in network.
-# dense_layers_neurons_num: List containing number of neurons in each dense layer.
-# batch_normalization: If true batch normalization will be performed after each convolutional layer.
+# convolutional_layers: Number of convolution layers in the network.
+# filters_number: A list containing the number of filters in each convolution layer.
+# The length of this list must be the same as the number of convolutional_layers.
+# kernel_size: Size of the kernel in the network.
+# polling_size: List specifying the size of pooling window in the network.
+# dense_layers_neurons_num: A list containing the number of neurons in each dense layer.
+# batch_normalization: If true, batch normalization will be performed after each convolutional layer.
 # batch_size: Number of samples in each batch.
 # epochs: Number of epoch in networks training.
 CNN:
@@ -37,16 +37,15 @@ CNN:
   epochs: 15
 
 # Residual network parameters.
-# initial_filters: Number of filters in initial convolutional layer.
-# kernel_size: List defining size of kernels in network.
-# polling_size: List that defines size of pooling window in network.
-# residual_blocks: Number of blocks with shortcut.
-# residual_filters_number: List containing number of filters inside each block.
-# convolution_layers_inside_res_block: How many layers should be inside residual block.
-# dense_layers_neurons_num: List containing number of neurons in each dense layer.
+# initial_filters: Number of filters in the initial convolution layer.
+# kernel_size: List specifying the size of kernel in the network.
+# polling_size: List that defines the size of the network connection window.
+# residual_blocks: Number of blocks with a shortcut.
+# residual_filters_number: A list containing the number of filters inside each block.
+# convolution_layers_inside_res_block: Number of layers inside the residual block.
+# dense_layers_neurons_num: A list containing the number of neurons in each dense layer.
 # batch_size: Number of samples in each batch.
 # epochs: Number of epoch in networks training.
-
 ResNet:
   initial_filters: 16
   kernel_size: 5
