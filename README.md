@@ -59,7 +59,7 @@ Pizza-or-not/
 ├── Pizza.py  
 ├── Utils.py  
 ├── config.yaml  
-├── requirements.txt
+├── requirements.txt  
 └── README.md  
 
 - `mlruns/`: Directory where experiment logs and artifacts are stored.
