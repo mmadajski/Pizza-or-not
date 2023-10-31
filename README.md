@@ -59,12 +59,14 @@ Pizza-or-not/
 ├── Pizza.py  
 ├── Utils.py  
 ├── config.yaml  
+├── requirements.txt
 └── README.md  
 
 - `mlruns/`: Directory where experiment logs and artifacts are stored.
 - `config.yaml`: YAML file for network customization.
 - `Pizza.py`: Script to train your model using the specified configuration.
 - `Utils.py`: Helper functions for the main script.
+- `requirements.txt`: Project requirements.
 - `README.md`: Project description.
 
 ---
