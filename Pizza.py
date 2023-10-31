@@ -16,7 +16,7 @@ matplotlib.use('TkAgg')
 Loading parameters of run, dataset and models.
 """
 
-with open('params.yaml') as f:
+with open('config.yaml') as f:
     parameters = yaml.load(f, Loader=SafeLoader)
     cnn_params = parameters["CNN"]
     resnet_params = parameters["ResNet"]
