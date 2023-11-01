@@ -15,7 +15,7 @@ This project is a pizza image classifier that utilizes Convolutional and Residua
 
 - **Customizable Neural Networks:** You can tailor the architecture and hyperparameters of the neural networks to fit your specific use case. All network configurations are specified in a YAML file, making it easy to experiment with different setups.
 
-- **Experiment Tracking:** We use the MLflow package to manage and track experiments, making it simple to compare and analyze different model configurations and their performance.
+- **Experiment Tracking:** Use of the MLflow package to manage and track experiments, makes it easier to compare and analyze different model configurations and their performance.
 
 - **Binary Classification:** The primary task of this project is binary classification: determining whether an image contains pizza or not. It's perfect for any application that requires pizza detection!
 
