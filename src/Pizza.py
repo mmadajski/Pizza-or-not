@@ -16,7 +16,7 @@ matplotlib.use('TkAgg')
 Loading parameters of run, dataset and models.
 """
 
-with open('config.yaml') as f:
+with open('..\\config.yaml') as f:
     parameters = yaml.load(f, Loader=SafeLoader)
     cnn_params = parameters["CNN"]
     resnet_params = parameters["ResNet"]
@@ -37,7 +37,6 @@ Images don't have the same resolution, so they require resizing.
 
 paths_pizza = glob.glob(".//pizza_not_pizza//pizza//*.jpg")
 paths_not_pizza = glob.glob(".//pizza_not_pizza//not_pizza//*.jpg")
-
 
 seed(123)
 selected_pizza_train = choices(paths_pizza, k=int(len(paths_pizza) * dataset_params["train_test_split"]))
