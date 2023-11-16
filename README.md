@@ -56,13 +56,15 @@ The project structure is as follows:
 
 Pizza-or-not/  
 ├── mlruns/  
-├── Pizza.py  
-├── Utils.py  
+├── src/  
+│  ├── Pizza.py  
+│  └── Utils.py  
 ├── config.yaml  
 ├── requirements.txt  
 └── README.md  
 
 - `mlruns/`: Directory where experiment logs and artifacts are stored.
+- `src/`: Directory containing the source code.
 - `config.yaml`: YAML file for network customization.
 - `Pizza.py`: Script to train your model using the specified configuration.
 - `Utils.py`: Helper functions for the main script.
